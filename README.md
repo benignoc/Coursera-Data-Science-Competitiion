@@ -40,7 +40,7 @@
 * [ Example of kNN ](https://www.analyticsvidhya.com/blog/2018/03/introduction-k-neighbours-algorithm-clustering/)
 
 ### Additional Tools
-* [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit) repository
+* [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit) repository for Big data sizes that dont fit into memory.
 * [XGBoost](https://github.com/dmlc/xgboost) repository
 * [LightGBM](https://github.com/Microsoft/LightGBM) repository
 * [Interactive demo](http://playground.tensorflow.org/) of simple feed-forward Neural Net
@@ -48,18 +48,16 @@
 * [Example from sklearn with different decision surfaces](http://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html)
 * [Arbitrary order factorization machines](https://github.com/geffy/tffm)
 
+## Software/Hardware requirements
 
-
-### Software/Hardware requirements
-
-#### StandCloud Computing:
+### StandCloud Computing:
 * [AWS](https://aws.amazon.com/), [Google Cloud](https://cloud.google.com/), [Microsoft Azure](https://azure.microsoft.com/)
 
-#### AWS spot option:
+### AWS spot option:
 * [Overview of Spot mechanism](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html)
 * [Spot Setup Guide](http://www.datasciencebowl.com/aws_guide/)
 
-#### Stack and packages:
+### Stack and packages:
 * [Basic SciPy stack (ipython, numpy, pandas, matplotlib)](https://www.scipy.org/)
 * [Jupyter Notebook](http://jupyter.org/)
 * [Stand-alone python tSNE package](https://github.com/danielfrg/tsne)
@@ -68,14 +66,50 @@
 * Python distribution with all-included packages: [Anaconda](https://www.continuum.io/what-is-anaconda)
 * [Blog "datas-frame" (contains posts about effective Pandas usage)](https://tomaugspurger.github.io/)
 
-### Feature preprocessing and generation with respect to models
+## Feature preprocessing and generation with respect to models
 
-#### Feature preprocessing
+### Feature preprocessing
+
+#### Numerical Features:
+* Numeric feature preprocessing is different for tree and non-tree models:
+    + Tree-based models dont depend on scaling
+    + Non-Tree-Based models hugely depend on scaling
+* Regularization is proportional to feature scale.
+* Gradient descent requires scaling
+* Outliers: It may be beneficial to limit min and max values of features even manually.
+    + `UPPER, LOWER = np.percentile(x, [1, 99])`
+* Most often used preprocessings are:
+    + MinMaxScaler - to[0,1]
+    + StandardScaler - to mean == 0, std == 1
+    + Rank - sets spaces between sorted balues to be equal.
+    + np.log(1+x) and np.sqrt(1+x) (to shorten distances between values.
+* It can be usefull to train model on concatenated data using different preprocessings, OR to mix models using different preprocessed data.
+* Feature generation is powered by:
+    + Prior knowledge
+    + Exploratory data analysis.
+    + An example may be to make a feature containing only the fractional data of numeric values. It can help to capture the difference in people's perception when seeing prices.
+    + Another example may be to create the time bewteen posts, as no man posts messages every X seconds exactly...
+
+#### Categorical and Ordinal Features ####
+* Ordinal features: It is an Ordered categorical feature. They are soreted in some meaningful order.
+* Label encoding maps categories to numbers
+    + Alphabetical: sklearn.preprocessing.LabelEncoder
+    + Order of appearance: pandas.factorize
+* Frequency encoding maps categories to their frequencies
+    + `encoding = titanic.groupby('Embarked').size()`
+    + `encoding = encoding / len(titanic)`
+    + `titanic['enc'] = titanic.Embarked.map(encoding)`
+* Label and Frequency encodings are frequently used for tree-based models.
+* One-Hot encodings often used for Non-Tree-Based models.
+* Interactions of categorical features can help linear models and KNN
+
+
+
 * [Preprocessing in Sklearn](http://scikit-learn.org/stable/modules/preprocessing.html)
 * [Andrew NG about gradient descent and feature scaling](https://www.coursera.org/learn/machine-learning/lecture/xx3Da/gradient-descent-in-practice-i-feature-scaling)
 * [Feature Scaling and the effect of standardization for machine learning algorithms](http://sebastianraschka.com/Articles/2014_about_feature_scaling.html)
 
-#### Feature generation
+### Feature generation
 * [Discover Feature Engineering, How to Engineer Features and How to Get Good at It](https://machinelearningmastery.com/discover-feature-engineering-how-to-engineer-features-and-how-to-get-good-at-it/)
 * [Discussion of feature engineering on Quora](https://www.quora.com/What-are-some-best-practices-in-Feature-Engineering)
 
