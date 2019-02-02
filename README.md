@@ -1,5 +1,5 @@
-
 # Week 1
+Notes from Coursera Course: [How to win a Data Science Competition: Learn from Top Kagglers](https://www.coursera.org/learn/competitive-data-science/home/welcome)
 
 ## Recap of main ML algorithms
 
@@ -103,13 +103,32 @@
 * One-Hot encodings often used for Non-Tree-Based models.
 * Interactions of categorical features can help linear models and KNN
 
+#### Datetime and Coordinates ####
+We can add many interesting features:
+1. Datetime
+    * Periodicity: day, year, day of week, month, season...
+    * Time since particular event.
+    * Difference between dates in different features.
+2. Coordinates:
+    * Interesting places from train/test data or additional data
+    * Centers of clusters
+    * Aggregated statistics for areas.
+    * Rotation of coordinates.
 
+#### Treating Missing Values ####
+1. The choice of Method to fill Na depends on the situation
+2. Usual way to deal with missing values is to replace them with -999, mean or median
+3. Missing values already can be replaced by something by the organizers
+4. Binary feature isnull can be beneficial
+5. In general, avoid filling Nans before feature generation
+6. Xgboost can handle NaN
+7. Plot Histograms to detect these outliers.
 
+#### Additional Material and links:
 * [Preprocessing in Sklearn](http://scikit-learn.org/stable/modules/preprocessing.html)
 * [Andrew NG about gradient descent and feature scaling](https://www.coursera.org/learn/machine-learning/lecture/xx3Da/gradient-descent-in-practice-i-feature-scaling)
 * [Feature Scaling and the effect of standardization for machine learning algorithms](http://sebastianraschka.com/Articles/2014_about_feature_scaling.html)
 
-### Feature generation
 * [Discover Feature Engineering, How to Engineer Features and How to Get Good at It](https://machinelearningmastery.com/discover-feature-engineering-how-to-engineer-features-and-how-to-get-good-at-it/)
 * [Discussion of feature engineering on Quora](https://www.quora.com/What-are-some-best-practices-in-Feature-Engineering)
 
